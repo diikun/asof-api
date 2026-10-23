@@ -38,14 +38,15 @@ console.log(p.name, "as of", p.as_of, p.counts);
 | `/api/v1/schema.json` | JSON Schema of the passport format |
 | `/feed.xml` | Change log as an Atom feed |
 
-Assets today (10):
+Assets today (20):
 
 | Group | Assets |
 |---|---|
 | Gold | `paxg` PAX Gold, `xaut` Tether Gold |
-| US-dollar stablecoins | `usdt` Tether USD, `usdc` USD Coin, `pyusd` PayPal USD, `rlusd` Ripple USD |
+| US-dollar stablecoins | `usdt` Tether USD, `usdc` USD Coin, `pyusd` PayPal USD, `rlusd` Ripple USD, `usdg` Global Dollar |
 | Euro stablecoins | `eurc` Euro Coin, `eurcv` EUR CoinVertible (Société Générale – FORGE) |
-| Funds and notes | `benji` Franklin OnChain U.S. Government Money Fund, `usdy` Ondo US Dollar Yield |
+| Funds and notes | `benji` Franklin OnChain U.S. Government Money Fund, `ustb` Invesco Short Duration US Government Securities Fund (Superstate), `uscc` Bitwise Crypto Carry Fund (Superstate), `usyc` US Yield Coin (Circle), `ousg` Ondo Short-Term US Government Treasuries, `usdy` Ondo US Dollar Yield |
+| Crypto tokens | `uni` Uniswap, `link` Chainlink, `steth` Lido Staked ETH, `ena` Ethena, `aave` Aave |
 
 The current list is always in `/api/v1/index.json`.
 
