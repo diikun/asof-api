@@ -38,7 +38,16 @@ console.log(p.name, "as of", p.as_of, p.counts);
 | `/api/v1/schema.json` | JSON Schema of the passport format |
 | `/feed.xml` | Change log as an Atom feed |
 
-Assets today: `paxg` (PAX Gold), `xaut` (Tether Gold), `usdc` (USD Coin), `eurc` (Euro Coin), `usdy` (Ondo US Dollar Yield).
+Assets today (10):
+
+| Group | Assets |
+|---|---|
+| Gold | `paxg` PAX Gold, `xaut` Tether Gold |
+| US-dollar stablecoins | `usdt` Tether USD, `usdc` USD Coin, `pyusd` PayPal USD, `rlusd` Ripple USD |
+| Euro stablecoins | `eurc` Euro Coin, `eurcv` EUR CoinVertible (Société Générale – FORGE) |
+| Funds and notes | `benji` Franklin OnChain U.S. Government Money Fund, `usdy` Ondo US Dollar Yield |
+
+The current list is always in `/api/v1/index.json`.
 
 Full reference: **[docs/api.md](docs/api.md)** · Format: **[docs/format.md](docs/format.md)**
 
@@ -46,7 +55,7 @@ Full reference: **[docs/api.md](docs/api.md)** · Format: **[docs/format.md](doc
 
 | Use | Example |
 |---|---|
-| **Compare** two tokens field by field — same asset, different promises (PAXG vs XAUT, USDC vs EURC) | [`examples/python/compare.py`](examples/python/compare.py), [`examples/javascript/compare.mjs`](examples/javascript/compare.mjs) |
+| **Compare** two tokens field by field — same asset, different promises (PAXG vs XAUT; USDT, USDC, PYUSD, RLUSD; EURC vs EURCV) | [`examples/python/compare.py`](examples/python/compare.py), [`examples/javascript/compare.mjs`](examples/javascript/compare.mjs) |
 | **Monitor** a token you hold or list: new or removed facts, a quote that disappeared from the issuer's document, a source that stopped answering, a new proxy admin, owner or implementation, a paused contract | [`examples/python/monitor.py`](examples/python/monitor.py), [`examples/github-action-monitor.yml`](examples/github-action-monitor.yml) |
 | **Embed** a passport card on your site; it updates by itself | [`examples/embed/index.html`](examples/embed/index.html) |
 

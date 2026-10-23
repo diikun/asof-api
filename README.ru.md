@@ -31,11 +31,11 @@ curl https://asof.diikunapp.workers.dev/api/v1/passports/paxg.json
 | `/api/v1/schema.json` | JSON Schema формата |
 | `/feed.xml` | лента изменений (Atom) |
 
-Активы сейчас: `paxg`, `xaut`, `usdc`, `eurc`, `usdy`. Подробно: [docs/api.md](docs/api.md) · формат: [docs/format.md](docs/format.md).
+Активы сейчас (10): золото — `paxg`, `xaut`; долларовые стейблкоины — `usdt`, `usdc`, `pyusd`, `rlusd`; евро-стейблкоины — `eurc`, `eurcv`; фонды и ноты — `benji`, `usdy`. Актуальный список всегда в `/api/v1/index.json`. Подробно: [docs/api.md](docs/api.md) · формат: [docs/format.md](docs/format.md).
 
 ## Что можно сделать
 
-- **Сравнение** двух токенов по каждому вопросу (PAXG и XAUT, USDC и EURC): `python3 examples/python/compare.py paxg xaut`
+- **Сравнение** двух токенов по каждому вопросу (PAXG и XAUT; USDT, USDC, PYUSD и RLUSD; EURC и EURCV): `python3 examples/python/compare.py paxg xaut`
 - **Контроль** токена, который вы держите или листите. Пример сообщит, если:
   - появился или исчез факт;
   - цитата пропала из документа эмитента;
