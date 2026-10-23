@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://asof.pro/schema/asof-passport-0.1.json",
+  "title": "AsOf Passport v0.1",
+  "description": "What stands behind a token as of a given date. Every fact cites its source. Licensed CC BY 4.0.",
+  "type": "object",
+  "required": ["schema", "id", "name", "type", "as_of", "issuer", "deployments", "facts", "unknowns", "measurements", "sources", "counts"],
+  "properties": {
+    "schema": {"const": "asof-passport/0.1"},
+    "id": {"type": "string", "pattern": "^[a-z0-9-]+$"},
+    "name": {"type": "string"},
+    "ticker": {"type": "string"},
+    "type": {"enum": ["rwa", "stablecoin", "coin"]},
+    "category": {"type": "string"},
+    "as_of": {"type": "string", "format": "date-time", "description": "Time of the last successful pipeline run for this asset."},
+    "issuer": {
+      "type": ["object", "null"],
+      "required": ["name"],
+      "properties": {"name": {"type": "string"}, "jurisdiction": {"type": "string"}}
+    },
+    "deployments": {"type": "array", "items": {"$ref": "#/$defs/deployment"}},
+    "facts": {"type": "array", "items": {"$ref": "#/$defs/fact"}},
+    "unknowns": {
+      "type": "array",
+      "items": {"type": "object", "required": ["field", "layer"], "properties": {"field": {"type": "string"}, "layer": {"$ref": "#/$defs/layer"}}}
+    },
+    "measurements": {"type": "array", "items": {"$ref": "#/$defs/measurement"}},
+    "sources": {"type": "array", "items": {"$ref": "#/$defs/source"}},
+    "counts": {
+      "type": "object",
+      "required": ["confirmed", "claimed", "unknown"],
+      "properties": {"confirmed": {"type": "integer"}, "claimed": {"type": "integer"}, "unknown": {"type": "integer"}}
+    }
+  },
+  "$defs": {
+    "layer": {"enum": ["summary", "legal", "exit", "backing", "rules"]},
+    "deployment": {
+      "type": "object",
+      "required": ["chain", "chain_id", "address", "address_source"],
+      "properties": {
+        "chain": {"type": "string"},
+        "chain_id": {"type": "integer"},
+        "address": {"type": "string", "pattern": "^0x[0-9a-fA-F]{40}$"},
+        "decimals": {"type": "integer"},
+        "address_source": {"type": "string", "format": "uri"},
+        "onchain_check": {"type": "object"}
+      }
+    },
+    "fact": {
+      "type": "object",
+      "required": ["id", "layer", "field", "text", "quote", "source_id", "source_url", "source_owner", "evidence", "approved_at"],
+      "properties": {
+        "id": {"type": "string"},
+        "layer": {"$ref": "#/$defs/layer"},
+        "field": {"type": "string"},
+        "text": {"type": "string", "description": "Plain-language statement in English, approved by the editor."},
+        "translations": {"type": "object", "additionalProperties": {"type": "string"}, "description": "The text in other UI languages. The quote is never translated."},
+        "translated_by": {"type": "string", "description": "Who produced the translations (e.g. deepl, claude); marks them as machine translation."},
+        "translated_from": {"type": "string", "description": "The English text the translations were made from."},
+        "quote": {"type": "string", "maxLength": 600, "description": "Verbatim words from the source, in the source language."},
+        "section": {"type": "string"},
+        "source_id": {"type": "string"},
+        "source_url": {"type": "string", "format": "uri"},
+        "source_owner": {"type": "string"},
+        "snapshot_sha256": {"type": "string"},
+        "published_at": {"type": "string"},
+        "fetched_at": {"type": "string"},
+        "approved_at": {"type": "string"},
+        "evidence": {"enum": ["confirmed", "claimed"]}
+      }
+    },
+    "measurement": {
+      "type": "object",
+      "required": ["key", "value", "read_at", "source"],
+      "properties": {
+        "key": {"type": "string"},
+        "value": {"type": ["string", "boolean", "null"]},
+        "unit": {"type": "string"},
+        "chain_id": {"type": "integer"},
+        "block": {"type": "integer"},
+        "read_at": {"type": "string"},
+        "published_at": {"type": "string"},
+        "source": {"type": "string"},
+        "error": {"type": "string"}
+      }
+    },
+    "source": {
+      "type": "object",
+      "required": ["id", "kind", "url", "owner"],
+      "properties": {
+        "id": {"type": "string"},
+        "kind": {"type": "string"},
+        "url": {"type": "string", "format": "uri"},
+        "owner": {"type": "string"},
+        "last_checked_at": {"type": ["string", "null"]},
+        "last_status": {"type": ["string", "null"]},
+        "last_changed_at": {"type": ["string", "null"]},
+        "sha256_text": {"type": ["string", "null"]},
+        "versions": {"type": "integer"},
+        "timestamp_token": {"type": ["string", "null"], "description": "RFC 3161 token (base64), later."}
+      }
+    }
+  }
+}

@@ -1,0 +1,36 @@
+# Example: copy to .github/workflows/asof-monitor.yml in YOUR repository.
+# Every day it checks the AsOf passports you list and fails the run (GitHub
+# then e-mails you) when something changed: a fact, a quote that disappeared,
+# a source, a new proxy admin, owner or implementation, a paused contract.
+name: AsOf monitor
+
+on:
+  schedule:
+    - cron: "30 6 * * *"   # after AsOf's daily run at 05:00 UTC
+  workflow_dispatch:
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/cache/restore@v4   # last seen state
+        with:
+          path: .asof-monitor.json
+          key: asof-monitor-${{ github.run_id }}
+          restore-keys: asof-monitor-
+      - name: Check passports
+        id: check
+        shell: bash
+        run: |
+          curl -fsSL -o monitor.py https://raw.githubusercontent.com/diikun/asof-api/main/examples/python/monitor.py
+          set +e
+          python3 monitor.py usdc paxg
+          echo "code=$?" >> "$GITHUB_OUTPUT"
+      - uses: actions/cache/save@v4      # save even when something changed
+        if: always()
+        with:
+          path: .asof-monitor.json
+          key: asof-monitor-${{ github.run_id }}
+      - name: Fail when something changed
+        if: steps.check.outputs.code != '0'
+        run: exit 1

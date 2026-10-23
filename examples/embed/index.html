@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AsOf passport cards — example</title>
+</head>
+<body style="font-family: system-ui, sans-serif; max-width: 640px; margin: 24px auto; padding: 0 16px">
+  <h1>Your page</h1>
+  <p>Each card shows what the issuer's documents say, the as-of date and what is Unknown. It updates by itself.</p>
+
+  <!-- 1. A placeholder per token: data-asof = asset id, data-lang = en, de, fr, ru, uk or ar -->
+  <div data-asof="paxg" data-lang="en"></div>
+  <div data-asof="usdc" data-lang="en" style="margin-top: 16px"></div>
+
+  <!-- 2. The script, once per page. No cookies, no tracking. -->
+  <script src="https://asof.diikunapp.workers.dev/embed.js" async></script>
+
+  <!-- Where scripts are not allowed, an iframe works too:
+  <iframe src="https://asof.diikunapp.workers.dev/en/embed/xaut/" title="AsOf passport"
+          style="width:100%;max-width:560px;height:620px;border:0"></iframe>
+  -->
+</body>
+</html>
