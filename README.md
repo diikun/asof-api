@@ -38,15 +38,15 @@ console.log(p.name, "as of", p.as_of, p.counts);
 | `/api/v1/schema.json` | JSON Schema of the passport format |
 | `/feed.xml` | Change log as an Atom feed |
 
-Assets today (20):
+Assets today (28):
 
 | Group | Assets |
 |---|---|
 | Gold | `paxg` PAX Gold, `xaut` Tether Gold |
-| US-dollar stablecoins | `usdt` Tether USD, `usdc` USD Coin, `pyusd` PayPal USD, `rlusd` Ripple USD, `usdg` Global Dollar |
+| US-dollar stablecoins | `usdt` Tether USD, `usdc` USD Coin, `pyusd` PayPal USD, `rlusd` Ripple USD, `usdg` Global Dollar, `usdp` Pax Dollar, `gho` GHO, `usde` Ethena USDe (synthetic dollar) |
 | Euro stablecoins | `eurc` Euro Coin, `eurcv` EUR CoinVertible (Société Générale – FORGE) |
-| Funds and notes | `benji` Franklin OnChain U.S. Government Money Fund, `ustb` Invesco Short Duration US Government Securities Fund (Superstate), `uscc` Bitwise Crypto Carry Fund (Superstate), `usyc` US Yield Coin (Circle), `ousg` Ondo Short-Term US Government Treasuries, `usdy` Ondo US Dollar Yield |
-| Crypto tokens | `uni` Uniswap, `link` Chainlink, `steth` Lido Staked ETH, `ena` Ethena, `aave` Aave |
+| Funds and notes | `benji` Franklin OnChain U.S. Government Money Fund, `ustb` Invesco Short Duration US Government Securities Fund, `uscc` Bitwise Crypto Carry Fund, `usyc` US Yield Coin, `ousg` Ondo Short-Term US Government Treasuries, `usdy` Ondo US Dollar Yield, `tbill` OpenEden TBILL, `syrupusdc` Maple syrupUSDC |
+| Crypto tokens | `uni` Uniswap, `link` Chainlink, `steth` Lido Staked ETH, `ldo` Lido DAO, `ena` Ethena, `aave` Aave, `crv` Curve DAO, `ens` Ethereum Name Service |
 
 The current list is always in `/api/v1/index.json`.
 
