@@ -29,7 +29,7 @@ One passport. Format: [format.md](format.md), JSON Schema: `/api/v1/schema.json`
 | `facts[]` | Approved statements: `field`, `text` (English), `translations` (machine), `quote` (verbatim, ≤ 300 chars), `section`, `source_url`, `source_owner`, `snapshot_sha256`, `published_at` (only if the document states it), `fetched_at`, `approved_at`, `evidence` (`confirmed`/`claimed`), `quote_in_latest_snapshot` |
 | `unknowns[]` | Expected fields without an approved fact |
 | `measurements[]` | On-chain readings: `key`, `value`, `block`, `read_at`, `chain_id` |
-| `sources[]` | Archived documents: `last_checked_at`, `last_status`, `last_changed_at`, `sha256_text`, `versions` |
+| `sources[]` | Archived documents: `last_checked_at`, `last_status`, `last_changed_at`, `sha256_text`, `versions`, `timestamp_token` (path of the daily proof that covers this exact version, see [Proof of date](#proof-of-date-rfc-3161-ltv)) |
 | `deployments[]` | Contract address per chain, the issuer page that lists it, and the on-chain `symbol()`/`decimals()` check |
 | `counts` | Number of confirmed and claimed facts and of unknown fields — not a score |
 
@@ -48,6 +48,37 @@ The same changes as an Atom feed — usable in any feed reader.
 ### `GET /api/v1/schema.json`
 
 JSON Schema of the passport (`asof-passport/0.1`). Also in this repository: [schema/](../schema/).
+
+### `GET /data/proofs/index.json` — proof of date (RFC 3161, LTV)
+
+Daily proofs, newest first. See [Proof of date](#proof-of-date-rfc-3161-ltv).
+
+## Proof of date (RFC 3161, LTV)
+
+Every day AsOf writes a manifest of all archived documents and has its SHA-256 time-stamped by two independent RFC 3161 time-stamping authorities, **FreeTSA** and **DigiCert**. For each day, `/data/proofs/{date}/` holds:
+
+| File | Content |
+|---|---|
+| `manifest.json` | `asof-manifest/0.1`: for every document `source_id`, `asset_id`, `url`, `sha256_text`, `sha256_raw`, `first_seen`; a `merkle_root`; `previous` (hashes of the previous day's manifest and tokens) |
+| `freetsa.tsr`, `digicert.tsr` | RFC 3161 time-stamp responses over the SHA-256 of `manifest.json` |
+| `*-chain.pem`, `freetsa-ca.pem` | Certificate chain of each authority |
+| `*-crl-N.crl` | Certificate revocation lists valid at that moment (long-term validation, LTV) |
+| `proof.json` | Summary: `manifest_sha256`, `merkle_root`, `documents`, `previous`, and per token `tsa`, `gen_time`, `serial`, `verified`, `ltv` |
+
+Because each manifest includes the previous day's hashes, the proofs form a chain: every day re-stamps everything before it. The certificates and CRLs are stored so a token can still be checked after the certificates expire or a service closes.
+
+Check it yourself:
+
+```bash
+D=2026-10-24; B=https://asof.diikunapp.workers.dev/data/proofs/$D   # asof.pro soon
+curl -O $B/manifest.json -O $B/freetsa.tsr -O $B/freetsa-ca.pem -O $B/digicert.tsr
+openssl ts -verify -in freetsa.tsr -data manifest.json -CAfile freetsa-ca.pem      # Verification: OK
+openssl ts -verify -in digicert.tsr -data manifest.json -CAfile /etc/ssl/cert.pem  # system root store
+```
+
+To tie one document to a date: take `sources[].sha256_text` from a passport, find the same `source_id` and `sha256_text` in the manifest of the day in `timestamp_token`. The token then shows that this version existed no later than its `gen_time`.
+
+What it does not prove: that the documents are true. FreeTSA and DigiCert are public RFC 3161 services, not qualified trust services under eIDAS. Only fingerprints are published; full documents stay in AsOf's private archive.
 
 ## Freshness
 

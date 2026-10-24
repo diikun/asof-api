@@ -30,8 +30,13 @@ curl https://asof.diikunapp.workers.dev/api/v1/passports/paxg.json
 | `/api/v1/changes.json` | найденные изменения в документах эмитентов (короткие фрагменты) |
 | `/api/v1/schema.json` | JSON Schema формата |
 | `/feed.xml` | лента изменений (Atom) |
+| `/data/proofs/index.json` | ежедневные метки времени RFC 3161 для архива, с данными LTV |
 
 Активы сейчас (28): золото — `paxg`, `xaut`; долларовые стейблкоины — `usdt`, `usdc`, `pyusd`, `rlusd`, `usdg`, `usdp`, `gho`, `usde`; евро-стейблкоины — `eurc`, `eurcv`; фонды и ноты — `benji`, `ustb`, `uscc`, `usyc`, `ousg`, `usdy`, `tbill`, `syrupusdc`; криптотокены — `uni`, `link`, `steth`, `ldo`, `ena`, `aave`, `crv`, `ens`. Актуальный список всегда в `/api/v1/index.json`. Подробно: [docs/api.md](docs/api.md) · формат: [docs/format.md](docs/format.md).
+
+## Доказательство даты (LTV)
+
+Каждый день отпечатки SHA-256 всех документов в архиве получают метки времени RFC 3161 от двух независимых служб — FreeTSA и DigiCert. Рядом с метками хранятся цепочки сертификатов и списки отзыва (долгосрочная проверка, LTV), поэтому дату можно проверить и через годы. Каждое доказательство содержит отпечатки предыдущего, так что они образуют цепочку. Проверка — `openssl ts -verify`, подробно в [docs/api.md](docs/api.md#proof-of-date-rfc-3161-ltv).
 
 ## Что можно сделать
 

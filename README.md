@@ -37,6 +37,7 @@ console.log(p.name, "as of", p.as_of, p.counts);
 | `/api/v1/changes.json` | Detected changes in the issuers' documents (short passages) |
 | `/api/v1/schema.json` | JSON Schema of the passport format |
 | `/feed.xml` | Change log as an Atom feed |
+| `/data/proofs/index.json` | Daily RFC 3161 time-stamps of the archive, with LTV data |
 
 Assets today (28):
 
@@ -74,6 +75,7 @@ The examples use only the standard library (Python 3.8+, Node 18+).
 - **Unknown** stays visible; missing evidence is shown neither as good nor as bad.
 - No scores, ratings, rankings, recommendations, trading or affiliate links.
 - Full documents are not republished — only hashes, dates, short quotes and links.
+- **Proof of date (LTV):** every day the SHA-256 fingerprints of all archived documents are time-stamped under RFC 3161 by FreeTSA and DigiCert, with certificate chains and revocation lists stored for long-term validation. Anyone can check them with `openssl ts -verify` — see [docs/api.md](docs/api.md#proof-of-date-rfc-3161-ltv).
 - Contract addresses come from the issuers' documentation and are checked on-chain.
 
 Evidence labels: **confirmed** — stated in an issuer document (terms, MiCA white paper, attestation, risk disclosure, address list); **claimed** — stated on a product page or in product documentation; **Unknown** — no approved fact.

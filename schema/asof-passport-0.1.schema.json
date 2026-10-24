@@ -97,7 +97,7 @@
         "last_changed_at": {"type": ["string", "null"]},
         "sha256_text": {"type": ["string", "null"]},
         "versions": {"type": "integer"},
-        "timestamp_token": {"type": ["string", "null"], "description": "RFC 3161 token (base64), later."}
+        "timestamp_token": {"type": ["string", "null"], "description": "Path of the latest daily proof (RFC 3161 time-stamps with LTV data) whose manifest lists this exact version of the document, e.g. /data/proofs/2026-10-24/proof.json; null if none yet."}
       }
     }
   }

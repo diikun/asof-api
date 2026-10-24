@@ -71,6 +71,7 @@ JSON Schema: [`schema/asof-passport-0.1.schema.json`](../schema/asof-passport-0.
 - Publication date and fetch date are separate; one never stands in for the other.
 - Unknown fields stay in `unknowns`; missing evidence is shown neither as good nor as bad.
 - Full documents are not published; only hashes, dates, short quotes and links.
+- Each archived version is listed in a daily manifest time-stamped under RFC 3161 with long-term validation data; `sources[].timestamp_token` points to that proof ([api.md](api.md#proof-of-date-rfc-3161-ltv)).
 - Contract addresses come from the issuer's documentation and are checked on-chain.
 
 ## Versioning
