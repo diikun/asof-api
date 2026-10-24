@@ -3,7 +3,7 @@
 // Shows what each issuer's documents say side by side, with the evidence label.
 // No ranking, no score. Data: CC BY 4.0, "AsOf by Diikun LAB".
 
-const BASE = process.env.ASOF_BASE ?? "https://asof.diikunapp.workers.dev"; // moving to https://asof.pro
+const BASE = process.env.ASOF_BASE ?? "https://asof.pro";
 const LAYERS = ["summary", "legal", "exit", "backing", "rules"];
 
 const get = async (id) => {

@@ -13,7 +13,7 @@ What the documents do not answer is listed as **Unknown** — never hidden, neve
 
 This repository is the **public side** of AsOf: API documentation, the open passport format, and examples for comparing tokens and monitoring changes. The AsOf pipeline itself is not in this repository.
 
-🌐 Site: **https://asof.pro** (currently also at https://asof.diikunapp.workers.dev) · 🇷🇺 [README на русском](README.ru.md)
+🌐 Site: **https://asof.pro** · 🇷🇺 [README на русском](README.ru.md)
 
 ---
 
@@ -22,11 +22,11 @@ This repository is the **public side** of AsOf: API documentation, the open pass
 No key, no sign-up. Every file can be read from any website (CORS) or server.
 
 ```bash
-curl https://asof.diikunapp.workers.dev/api/v1/passports/paxg.json
+curl https://asof.pro/api/v1/passports/paxg.json
 ```
 
 ```js
-const p = await (await fetch("https://asof.diikunapp.workers.dev/api/v1/passports/usdc.json")).json();
+const p = await (await fetch("https://asof.pro/api/v1/passports/usdc.json")).json();
 console.log(p.name, "as of", p.as_of, p.counts);
 ```
 
@@ -98,4 +98,4 @@ Coins are next: a **“who can change the rules”** passport for networks like 
 
 Found something wrong or outdated — as an issuer, a lawyer or a reader? Open an issue with the page and the source, or write to diikunapp@gmail.com. Confirmed errors are corrected and the correction is dated.
 
-Operator: Pakto (Dmitriy Diikun), Hettstedt, Germany · [Impressum](https://asof.diikunapp.workers.dev/de/impressum/)
+Operator: Pakto (Dmitriy Diikun), Hettstedt, Germany · [Impressum](https://asof.pro/de/impressum/)

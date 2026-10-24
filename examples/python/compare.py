@@ -14,7 +14,7 @@ import os
 import textwrap
 import urllib.request
 
-BASE = os.environ.get("ASOF_BASE", "https://asof.diikunapp.workers.dev")  # moving to https://asof.pro
+BASE = os.environ.get("ASOF_BASE", "https://asof.pro")
 
 LAYERS = ["summary", "legal", "exit", "backing", "rules"]
 CHAIN_KEYS = [  # on-chain measurements worth putting next to each other

@@ -21,7 +21,7 @@ import os
 import sys
 import urllib.request
 
-BASE = os.environ.get("ASOF_BASE", "https://asof.diikunapp.workers.dev")  # moving to https://asof.pro
+BASE = os.environ.get("ASOF_BASE", "https://asof.pro")
 WATCH_CHAIN = ["upgradeable_proxy", "proxy_pattern", "proxy_implementation", "proxy_admin", "proxy_admin_is_contract",
                "owner", "owner_is_contract", "master_minter", "pauser", "blacklister", "paused"]
 

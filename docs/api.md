@@ -1,6 +1,6 @@
 # API reference (v1)
 
-Base URL: `https://asof.pro` — until the domain is connected, use `https://asof.diikunapp.workers.dev`. Both serve the same files.
+Base URL: `https://asof.pro`.
 
 The API is a set of static JSON files, rebuilt and republished after every AsOf run. There is no key, no sign-up and no rate limit on our side. CORS is enabled (`Access-Control-Allow-Origin: *`) on `/api/*`, `/data/*`, `/schema/*`, `/feed.xml` and `/embed.js`.
 
@@ -70,7 +70,7 @@ Because each manifest includes the previous day's hashes, the proofs form a chai
 Check it yourself:
 
 ```bash
-D=2026-10-24; B=https://asof.diikunapp.workers.dev/data/proofs/$D   # asof.pro soon
+D=2026-10-24; B=https://asof.pro/data/proofs/$D
 curl -O $B/manifest.json -O $B/freetsa.tsr -O $B/freetsa-ca.pem -O $B/digicert.tsr
 openssl ts -verify -in freetsa.tsr -data manifest.json -CAfile freetsa-ca.pem      # Verification: OK
 openssl ts -verify -in digicert.tsr -data manifest.json -CAfile /etc/ssl/cert.pem  # system root store

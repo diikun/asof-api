@@ -13,14 +13,14 @@
 
 Здесь публичная часть AsOf: документация API, открытый формат паспорта и примеры для сравнения токенов и контроля изменений.
 
-🌐 Сайт: **https://asof.pro** (пока также https://asof.diikunapp.workers.dev) · 🇬🇧 [English](README.md)
+🌐 Сайт: **https://asof.pro** · 🇬🇧 [English](README.md)
 
 ## Быстрый старт
 
 Ключ и регистрация не нужны. Файлы можно читать с любого сайта (CORS) или сервера.
 
 ```bash
-curl https://asof.diikunapp.workers.dev/api/v1/passports/paxg.json
+curl https://asof.pro/api/v1/passports/paxg.json
 ```
 
 | Адрес | Что отдаёт |
