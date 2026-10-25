@@ -26,6 +26,7 @@
     },
     "measurements": {"type": "array", "items": {"$ref": "#/$defs/measurement"}},
     "sources": {"type": "array", "items": {"$ref": "#/$defs/source"}},
+    "reserve_check": {"type": "object", "description": "Promise vs reserve reports: the promised reporting frequency (an approved fact), archived reports with quoted figures and dates, the on-chain supply, and neutral notes on differences in dates or figures. Not an assessment."},
     "counts": {
       "type": "object",
       "required": ["confirmed", "claimed", "unknown"],
