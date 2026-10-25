@@ -14,7 +14,10 @@ The API is a set of static JSON files, rebuilt and republished after every AsOf 
   "last_successful_run": "2026-10-23T18:01:36Z",
   "assets": [
     {"id": "paxg", "name": "PAX Gold", "ticker": "PAXG", "type": "rwa", "category": "gold",
-     "issuer": "Paxos Trust Company, NA", "as_of": "…", "counts": {"confirmed": 16, "claimed": 1, "unknown": 0}}
+     "issuer": "Paxos Trust Company, NA", "jurisdiction": "United States",
+     "deployments": [{"chain": "ethereum", "chain_id": 1, "address": "0x4580…Af78"}],
+     "last_changed_at": null,
+     "as_of": "…", "counts": {"confirmed": 16, "claimed": 1, "unknown": 0}}
   ]
 }
 ```
