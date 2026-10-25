@@ -33,7 +33,7 @@
     }
   },
   "$defs": {
-    "layer": {"enum": ["summary", "legal", "exit", "backing", "rules"]},
+    "layer": {"enum": ["summary", "legal", "exit", "backing", "rules", "mica"]},
     "deployment": {
       "type": "object",
       "required": ["chain", "chain_id", "address", "address_source"],

@@ -64,6 +64,12 @@ JSON Schema: [`schema/asof-passport-0.1.schema.json`](../schema/asof-passport-0.
 | rules | `upgrade` | Who can replace the contract code or migrate the token |
 | rules | `mint` | How new tokens are created and who controls it |
 | rules | `amend_terms` | Who can change the terms, and with what notice |
+| mica | `mica_token_class` | MiCA class the white paper gives the token (e-money / asset-referenced) |
+| mica | `mica_authorisation` | EU issuer and its authorisation, as the white paper states it |
+| mica | `mica_redemption` | Redemption right under MiCA, as the white paper states it |
+| mica | `mica_whitepaper` | When and to which authority the white paper was notified |
+
+The `mica` layer is asked only for tokens with a MiCA white paper among their sources. It records what the documents state; it is not a compliance assessment.
 
 ## Rules a passport follows
 
