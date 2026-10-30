@@ -51,6 +51,10 @@ Detected changes in the archived documents: `asset_id`, `source_id`, `url`, `det
 
 Seven events (`depeg`, `redemption-halt`, `issuer-insolvency`, `freeze`, `rules-change`, `contract-change`, `underlying-loss`). Each lists the passport `fields` and on-chain `measures` that matter for it, and per token in `results[]`: `questions[]` (`field`, `status` = `confirmed` / `claimed` / `unknown`, `fact_id`), `chain[]` (measurement keys), neutral `notes[]` and `counts` (`asked`, `answered`, `unknown`). Notes are mechanical, e.g. `role_without_document` (a blacklister or pauser on-chain, no document on freezing), `proxy_without_document`, `single_key_role`, `control_changed`, `wording_changed`, `reserve_*`. No prices, amounts, scores or legal conclusions.
 
+### `GET /api/v1/code/{id}.json` — verified source and capabilities
+
+The verified source of the token contract (and of the implementation behind a proxy), taken from [Sourcify](https://sourcify.dev): `contracts[]` (address, compiler, links), `files[]` (path, SPDX `licence`, `shown` — file text is included only under an open licence) and, per capability (`freeze`, `seize`, `pause`, `mint`, `burn`, `upgrade`, `roles`, `fees`, `rescue`), the functions with `signature`, `file`, `start`/`end` line and the `modifiers` in their header (who may call them, according to the code). Shown on the site at `/{lang}/code/{id}/`.
+
 ### `GET /api/v1/evidence/{id}.json` — evidence pack
 
 Everything needed to check one passport without trusting AsOf: for every document version a fact rests on, the manifest entry, its `merkle_path` to that day's `merkle_root`, and the RFC 3161 tokens with LTV files. `facts[]` say which version each quote comes from (`stamped_in`, or `latest_stamped_in` when the quote is found in the latest version). Check it with [tools/verify.py](../tools/verify.py):

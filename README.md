@@ -37,6 +37,7 @@ console.log(p.name, "as of", p.as_of, p.counts);
 | `/api/v1/changes.json` | Detected changes in the issuers' documents (short passages, dates of the old and new version) |
 | `/api/v1/scenarios.json` | What if…: seven events — which questions each token's documents answer, what the contract shows |
 | `/api/v1/evidence/{id}.json` | Evidence pack of one passport: manifest entries, Merkle paths, RFC 3161 tokens — check with [`tools/verify.py`](tools/verify.py) |
+| `/api/v1/code/{id}.json` | Verified contract source (open-licence files only) and where the freeze, mint, upgrade… functions sit, with who may call them |
 | `/api/v1/schema.json` | JSON Schema of the passport format |
 | `/feed.xml` | Change log as an Atom feed |
 | `/data/proofs/index.json` | Daily RFC 3161 time-stamps of the archive, with LTV data |
