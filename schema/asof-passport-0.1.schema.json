@@ -27,6 +27,7 @@
     },
     "measurements": {"type": "array", "items": {"$ref": "#/$defs/measurement"}},
     "sources": {"type": "array", "items": {"$ref": "#/$defs/source"}},
+    "code_check": {"type": "object", "description": "What the contract code can do: for each capability (mint, burn by a role, pause, freeze, seize, upgrade, roles, fees, rescue) the functions found in the bytecode of the token and its implementation, the passport question it belongs to with that question's status, the roles that usually hold it, and neutral notes where code and documents differ. A capability not found means not found by this check."},
     "control_history": {
       "type": "object",
       "description": "Changes in who controls the contract (roles, proxy code, multisig thresholds, timelock delays), found by comparing AsOf's daily on-chain readings. Covers only the time since observed_since.",
