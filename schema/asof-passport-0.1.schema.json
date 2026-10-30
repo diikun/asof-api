@@ -13,6 +13,7 @@
     "type": {"enum": ["rwa", "stablecoin", "coin"]},
     "category": {"type": "string"},
     "as_of": {"type": "string", "format": "date-time", "description": "Time of the last successful pipeline run for this asset."},
+    "archived_since": {"type": ["string", "null"], "description": "When AsOf first archived a document of this token. Nothing before this moment is in the archive."},
     "issuer": {
       "type": ["object", "null"],
       "required": ["name"],
@@ -26,6 +27,14 @@
     },
     "measurements": {"type": "array", "items": {"$ref": "#/$defs/measurement"}},
     "sources": {"type": "array", "items": {"$ref": "#/$defs/source"}},
+    "control_history": {
+      "type": "object",
+      "description": "Changes in who controls the contract (roles, proxy code, multisig thresholds, timelock delays), found by comparing AsOf's daily on-chain readings. Covers only the time since observed_since.",
+      "properties": {
+        "observed_since": {"type": ["string", "null"]},
+        "changes": {"type": "array", "items": {"type": "object", "required": ["key", "from", "to", "last_seen_before", "first_seen_after"]}}
+      }
+    },
     "reserve_check": {"type": "object", "description": "Promise vs reserve reports: the promised reporting frequency (an approved fact), archived reports with quoted figures and dates, the on-chain supply, and neutral notes on differences in dates or figures. Not an assessment."},
     "counts": {
       "type": "object",
@@ -98,6 +107,21 @@
         "last_changed_at": {"type": ["string", "null"]},
         "sha256_text": {"type": ["string", "null"]},
         "versions": {"type": "integer"},
+        "first_archived_at": {"type": ["string", "null"], "description": "First successful snapshot of this source: the archive covers it from this moment on."},
+        "last_ok_at": {"type": ["string", "null"]},
+        "history": {
+          "type": "array",
+          "description": "Every archived version, newest first: first and last seen by AsOf, SHA-256 of the extracted text and of the file, and a link to the nearest Internet Archive copy. AsOf publishes no copies of documents itself.",
+          "items": {
+            "type": "object",
+            "required": ["sha256_text", "first_seen", "last_seen"],
+            "properties": {
+              "sha256_text": {"type": "string"}, "sha256_raw": {"type": "string"}, "size": {"type": "integer"},
+              "format": {"type": "string"}, "first_seen": {"type": "string"}, "last_seen": {"type": "string"},
+              "wayback": {"type": "string", "format": "uri"}
+            }
+          }
+        },
         "timestamp_token": {"type": ["string", "null"], "description": "Path of the latest daily proof (RFC 3161 time-stamps with LTV data) whose manifest lists this exact version of the document, e.g. /data/proofs/2026-10-24/proof.json; null if none yet."}
       }
     }

@@ -34,7 +34,9 @@ console.log(p.name, "as of", p.as_of, p.counts);
 |---|---|
 | `/api/v1/index.json` | All assets, counters, time of the last run |
 | `/api/v1/passports/{id}.json` | One passport: facts with quotes and sources, on-chain measurements, archived sources, unknowns |
-| `/api/v1/changes.json` | Detected changes in the issuers' documents (short passages) |
+| `/api/v1/changes.json` | Detected changes in the issuers' documents (short passages, dates of the old and new version) |
+| `/api/v1/scenarios.json` | What if…: seven events — which questions each token's documents answer, what the contract shows |
+| `/api/v1/evidence/{id}.json` | Evidence pack of one passport: manifest entries, Merkle paths, RFC 3161 tokens — check with [`tools/verify.py`](tools/verify.py) |
 | `/api/v1/schema.json` | JSON Schema of the passport format |
 | `/feed.xml` | Change log as an Atom feed |
 | `/data/proofs/index.json` | Daily RFC 3161 time-stamps of the archive, with LTV data |
@@ -57,7 +59,7 @@ Full reference: **[docs/api.md](docs/api.md)** · Format: **[docs/format.md](doc
 
 | Use | Example |
 |---|---|
-| **Compare** two tokens field by field — same asset, different promises (PAXG vs XAUT; USDT, USDC, PYUSD, RLUSD; EURC vs EURCV) | [`examples/python/compare.py`](examples/python/compare.py), [`examples/javascript/compare.mjs`](examples/javascript/compare.mjs) |
+| **Compare** any two tokens field by field — same asset, different promises (on the site: asof.pro/en/compare/) | [`examples/python/compare.py`](examples/python/compare.py), [`examples/javascript/compare.mjs`](examples/javascript/compare.mjs) |
 | **Monitor** a token you hold or list: new or removed facts, a quote that disappeared from the issuer's document, a source that stopped answering, a new proxy admin, owner or implementation, a paused contract | [`examples/python/monitor.py`](examples/python/monitor.py), [`examples/github-action-monitor.yml`](examples/github-action-monitor.yml) |
 | **Embed** a passport card on your site; it updates by itself | [`examples/embed/index.html`](examples/embed/index.html) |
 

@@ -32,17 +32,31 @@ One passport. Format: [format.md](format.md), JSON Schema: `/api/v1/schema.json`
 | `facts[]` | Approved statements: `field`, `text` (English), `translations` (machine), `quote` (verbatim, ≤ 300 chars), `section`, `source_url`, `source_owner`, `snapshot_sha256`, `published_at` (only if the document states it), `fetched_at`, `approved_at`, `evidence` (`confirmed`/`claimed`), `quote_in_latest_snapshot` |
 | `unknowns[]` | Expected fields without an approved fact |
 | `measurements[]` | On-chain readings: `key`, `value`, `block`, `read_at`, `chain_id` |
-| `sources[]` | Archived documents: `last_checked_at`, `last_status`, `last_changed_at`, `sha256_text`, `versions`, `timestamp_token` (path of the daily proof that covers this exact version, see [Proof of date](#proof-of-date-rfc-3161-ltv)) |
+| `archived_since` | When AsOf first archived a document of this token. Nothing earlier is in the archive |
+| `sources[]` | Archived documents: `first_archived_at`, `last_checked_at`, `last_status`, `last_changed_at`, `sha256_text`, `versions`, `timestamp_token` (path of the daily proof that covers this exact version, see [Proof of date](#proof-of-date-rfc-3161-ltv)), and `history[]` — every archived version with `first_seen`, `last_seen`, `sha256_text`, `sha256_raw` (the file), `format`, `size` and `wayback` (nearest Internet Archive copy; AsOf publishes no copies itself) |
+| `control_history` | Changes in who controls the contract, found by comparing daily on-chain readings: `observed_since`, `changes[]` with `key`, `from`, `to`, `last_seen_before`, `first_seen_after` |
 | `deployments[]` | Contract address per chain, the issuer page that lists it, and the on-chain `symbol()`/`decimals()` check |
 | `counts` | Number of confirmed and claimed facts and of unknown fields — not a score |
 
-On-chain measurement keys (where the contract exposes them): `total_supply`, `upgradeable_proxy` (`true` or `"not_detected"`), `proxy_pattern`, `proxy_implementation`, `proxy_admin`, `proxy_admin_is_contract`, `owner`, `owner_is_contract`, `master_minter`, `pauser`, `blacklister` (each with `_is_contract`), `paused`, and for gold tokens the reference feed `feed_xau_usd`, `feed_xau_usd_fresh`.
+On-chain measurement keys (where the contract exposes them): `total_supply`, `upgradeable_proxy` (`true` or `"not_detected"`), `proxy_pattern`, `proxy_implementation`, `proxy_admin`, `proxy_admin_is_contract`, `proxy_admin_owner` (who owns a ProxyAdmin contract), `owner`, `owner_is_contract`, `master_minter`, `pauser`, `blacklister` (each with `_is_contract`; when the role is a Safe multisig also `_multisig_threshold` and `_multisig_signers`, when it is a timelock `_timelock_delay` in seconds), `paused`, and for gold tokens the reference feed `feed_xau_usd`, `feed_xau_usd_fresh`.
 
 `*_is_contract: false` means the address is a single-key account; `true` means a smart contract (for example a multisig or a timelock). AsOf does not judge either.
 
 ### `GET /api/v1/changes.json`
 
-Detected changes in the archived documents: `asset_id`, `source_id`, `url`, `detected_at`, previous and new SHA-256, and `passages[]` with short `removed`/`added` excerpts (≤ 300 characters each).
+Detected changes in the archived documents: `asset_id`, `source_id`, `url`, `detected_at`, previous and new SHA-256, `prev_version` / `new_version` (`first_seen`, `last_seen`, `wayback`: the change happened between the old version's `last_seen` and `detected_at`), and `passages[]` with short `removed`/`added` excerpts (≤ 300 characters each).
+
+### `GET /api/v1/scenarios.json` — What if…
+
+Seven events (`depeg`, `redemption-halt`, `issuer-insolvency`, `freeze`, `rules-change`, `contract-change`, `underlying-loss`). Each lists the passport `fields` and on-chain `measures` that matter for it, and per token in `results[]`: `questions[]` (`field`, `status` = `confirmed` / `claimed` / `unknown`, `fact_id`), `chain[]` (measurement keys), neutral `notes[]` and `counts` (`asked`, `answered`, `unknown`). Notes are mechanical, e.g. `role_without_document` (a blacklister or pauser on-chain, no document on freezing), `proxy_without_document`, `single_key_role`, `control_changed`, `wording_changed`, `reserve_*`. No prices, amounts, scores or legal conclusions.
+
+### `GET /api/v1/evidence/{id}.json` — evidence pack
+
+Everything needed to check one passport without trusting AsOf: for every document version a fact rests on, the manifest entry, its `merkle_path` to that day's `merkle_root`, and the RFC 3161 tokens with LTV files. `facts[]` say which version each quote comes from (`stamped_in`, or `latest_stamped_in` when the quote is found in the latest version). Check it with [tools/verify.py](../tools/verify.py):
+
+```bash
+python3 tools/verify.py https://asof.pro/api/v1/evidence/paxg.json   # → RESULT: all checks passed
+```
 
 ### `GET /feed.xml`
 
